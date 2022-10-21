@@ -1,0 +1,7 @@
+classes= 3
+train  = /home/marco/catkin_workspace/src/darknet_ros/darknet/2007_train.txt
+#valid  = /home/marco/catkin_workspace/src/darknet_ros/darknet/2007_test.txt
+valid  = /home/marco/catkin_workspace/src/darknet_ros/darknet/2007_ShoesStatesTest.txt
+names = data/RP.names
+backup = backup
+eval = RP

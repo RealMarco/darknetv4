@@ -1,0 +1,6 @@
+classes= 3
+train  = /home/dongyi/darknet/2007_train.txt
+valid  = /home/dongyi/darknet/2007_test.txt
+names = data/voc-spb.names
+backup = backup
+

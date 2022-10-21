@@ -1,0 +1,6 @@
+classes= 21
+train  = /home/marco/catkin_workspace/src/darknet_ros/darknet/2022_train.txt
+valid  = /home/marco/catkin_workspace/src/darknet_ros/darknet/2022_test.txt
+names = data/CASGC.names
+backup = backup
+eval = CASGC
