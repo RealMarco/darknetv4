@@ -298,7 +298,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
         const int iteration = get_current_iteration(net);
         //i = get_current_batch(net);
 
-        int calc_map_for_each = 4 * train_images_num / (net.batch * net.subdivisions);  // calculate mAP for each 4 Epochs
+        int calc_map_for_each = 2 * train_images_num / (net.batch * net.subdivisions);  // calculate mAP for each 2 Epochs
         calc_map_for_each = fmax(calc_map_for_each, 100);
         int next_map_calc = iter_map + calc_map_for_each;
         next_map_calc = fmax(next_map_calc, net.burn_in);
@@ -368,7 +368,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
                 best_map = mean_average_precision;
                 printf("New best mAP!\n");
                 char buff[256];
-                sprintf(buff, "%s/%s_best.weights", backup_directory, base);
+                sprintf(buff, "%s/%s_best_%d.weights", backup_directory, base, iteration);
                 save_weights(net, buff);
             }
 
@@ -391,8 +391,11 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
 
         //if (i % 1000 == 0 || (i < 1000 && i % 100 == 0)) {
         //if (i % 100 == 0) {
+        /*
         if ((iteration >= (iter_save + 10000) || iteration % 10000 == 0) ||
-            (iteration >= (iter_save + 1000) || iteration % 1000 == 0) && net.max_batches < 10000)
+            (iteration >= (iter_save + 100) || iteration % 100 == 0) && net.max_batches < 10000)
+        */
+        if (iteration >= 3192 && iteration % 114==0)
         {
             iter_save = iteration;
 #ifdef GPU
@@ -403,7 +406,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
             save_weights(net, buff);
         }
 
-        if (iteration >= (iter_save_last + 100) || (iteration % 100 == 0 && iteration > 1)) {
+        if (iteration >= (iter_save_last + 114) || (iteration % 114 == 0 && iteration > 1)) {
             iter_save_last = iteration;
 #ifdef GPU
             if (ngpus != 1) sync_nets(nets, ngpus, 0);
@@ -640,7 +643,7 @@ static void print_bdd_detections(FILE *fp, char *image_path, detection *dets, in
     }
 }
 
-void validate_detector(char *datacfg, char *cfgfile, char *weightfile, char *outfile)
+void validate_detector(char *datacfg, char *cfgfile, char *weightfile, float thresh, char *outfile)
 {
     int j;
     list *options = read_data_cfg(datacfg);
@@ -730,7 +733,7 @@ void validate_detector(char *datacfg, char *cfgfile, char *weightfile, char *out
     int i = 0;
     int t;
 
-    float thresh = .001;
+    //float thresh = .001;
     float nms = .6;
 
     int nthreads = 4;
@@ -1022,7 +1025,7 @@ float validate_detector_map(char *datacfg, char *cfgfile, char *weightfile, floa
     if (letter_box) args.type = LETTERBOX_DATA;
     else args.type = IMAGE_DATA;
 
-    //const float thresh_calc_avg_iou = 0.24;
+    //const float thresh_calc_avg_iou = 0.25;
     float avg_iou = 0;
     int tp_for_thresh = 0;
     int fp_for_thresh = 0;
@@ -1353,7 +1356,7 @@ float validate_detector_map(char *datacfg, char *cfgfile, char *weightfile, floa
     const float cur_precision = (float)tp_for_thresh / ((float)tp_for_thresh + (float)fp_for_thresh);
     const float cur_recall = (float)tp_for_thresh / ((float)tp_for_thresh + (float)(unique_truth_count - tp_for_thresh));
     const float f1_score = 2.F * cur_precision * cur_recall / (cur_precision + cur_recall);
-    printf("\n for conf_thresh = %1.2f, precision = %1.2f, recall = %1.2f, F1-score = %1.2f \n",
+    printf("\n for conf_thresh = %1.2f, precision = %1.4f, recall = %1.4f, F1-score = %1.4f \n",
         thresh_calc_avg_iou, cur_precision, cur_recall, f1_score);
 
     printf(" for conf_thresh = %0.2f, TP = %d, FP = %d, FN = %d, average IoU = %2.2f %% \n",
@@ -1985,8 +1988,8 @@ void run_detector(int argc, char **argv)
     char *out_filename = find_char_arg(argc, argv, "-out_filename", 0);
     char *outfile = find_char_arg(argc, argv, "-out", 0);
     char *prefix = find_char_arg(argc, argv, "-prefix", 0);
-    float thresh = find_float_arg(argc, argv, "-thresh", .25);    // 0.24
-    float iou_thresh = find_float_arg(argc, argv, "-iou_thresh", .5);    // 0.5 for mAP
+    float thresh = find_float_arg(argc, argv, "-thresh", .25);    // confidence threshold 
+    float iou_thresh = find_float_arg(argc, argv, "-iou_thresh", .5);    // mAP at iou_thresh
     float hier_thresh = find_float_arg(argc, argv, "-hier", .5);
     int cam_index = find_int_arg(argc, argv, "-c", 0);
     int frame_skip = find_int_arg(argc, argv, "-s", 0);
@@ -2037,7 +2040,7 @@ void run_detector(int argc, char **argv)
     char *filename = (argc > 6) ? argv[6] : 0;
     if (0 == strcmp(argv[2], "test")) test_detector(datacfg, cfg, weights, filename, thresh, hier_thresh, dont_show, ext_output, save_labels, outfile, letter_box, benchmark_layers);
     else if (0 == strcmp(argv[2], "train")) train_detector(datacfg, cfg, weights, gpus, ngpus, clear, dont_show, calc_map, thresh, iou_thresh, mjpeg_port, show_imgs, benchmark_layers, chart_path);
-    else if (0 == strcmp(argv[2], "valid")) validate_detector(datacfg, cfg, weights, outfile);
+    else if (0 == strcmp(argv[2], "valid")) validate_detector(datacfg, cfg, weights, thresh, outfile);
     else if (0 == strcmp(argv[2], "recall")) validate_detector_recall(datacfg, cfg, weights);
     else if (0 == strcmp(argv[2], "map")) validate_detector_map(datacfg, cfg, weights, thresh, iou_thresh, map_points, letter_box, NULL);
     else if (0 == strcmp(argv[2], "calc_anchors")) calc_anchors(datacfg, num_of_clusters, width, height, show);
