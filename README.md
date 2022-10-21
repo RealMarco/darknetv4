@@ -1,4 +1,5 @@
-# Yolo v4, v3 and v2 for Windows and Linux
+# Change your folder name from darknetv4 into darknet right after cloning
+# For trainig and testing. YOLOv7, Scaled YOLOv4, Yolo v4, v3 and v2 for Windows and Linux
 
 ## (neural networks for object detection)
 
