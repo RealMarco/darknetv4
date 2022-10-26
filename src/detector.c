@@ -368,7 +368,8 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
                 best_map = mean_average_precision;
                 printf("New best mAP!\n");
                 char buff[256];
-                sprintf(buff, "%s/%s_best_%d.weights", backup_directory, base, iteration);
+                //sprintf(buff, "%s/%s_best_%d.weights", backup_directory, base, iteration);
+                sprintf(buff, "%s/%s_best.weights", backup_directory, base);
                 save_weights(net, buff);
             }
 
@@ -395,7 +396,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
         if ((iteration >= (iter_save + 10000) || iteration % 10000 == 0) ||
             (iteration >= (iter_save + 100) || iteration % 100 == 0) && net.max_batches < 10000)
         */
-        if (iteration >= 3192 && iteration % 114==0)
+        if (iteration >= 8192 && iteration % 5120==0)
         {
             iter_save = iteration;
 #ifdef GPU
@@ -406,7 +407,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
             save_weights(net, buff);
         }
 
-        if (iteration >= (iter_save_last + 114) || (iteration % 114 == 0 && iteration > 1)) {
+        if (iteration >= (iter_save_last + 256) || (iteration % 256 == 0 && iteration > 1)) {
             iter_save_last = iteration;
 #ifdef GPU
             if (ngpus != 1) sync_nets(nets, ngpus, 0);

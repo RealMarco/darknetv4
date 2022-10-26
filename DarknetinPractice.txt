@@ -47,6 +47,8 @@ $ make clean  # if you have make a CPU version darknet before
 $ make
 ### As for error and debugging, refer to https://github.com/RealMarco/InstallSoftwaresonUbuntu/blob/master/InstallGPUVersionDarknetv3
 
+### compiling on windows is quite different from linux, plz refer to AlexeyAB for more details 
+
 ## 5. Modify cfg/CASGC.data  
 eval = RP  
  
@@ -106,6 +108,10 @@ $ ./darknet detector train cfg/CASGC.data cfg/yolov7x_CASGC.cfg -map -iou_thresh
 		iou_normalizer=0.5 
 		iou_loss=giou 
 	$ ./darknet detector train cfg/CASGC.data cfg/yolov7x_CASGC.cfg backup/your_best.weights -map -iou_thresh 0.83 -thresh .62 2>1 |tee visualization/train_yolov7x_CASGC_iou.83.log
+
+>>> darkent.exe xxx for windows
+
+### Copy and rename the chart_xxx.png, .log and xxx_last.weights once pausing the training, in order to backup them.
 
 
 ## 9. Checkpoint Training/ Transfer Learning: sepcify pretrained weights and ensure that *max_batches* is bigger than trained batches.  
