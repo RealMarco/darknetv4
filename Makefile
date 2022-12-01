@@ -1,15 +1,25 @@
-GPU=1
+GPU=1  # CUDA or not 
 CUDNN=1
 CUDNN_HALF=0
 OPENCV=1
 AVX=0
 OPENMP=0
-LIBSO=0
+LIBSO=0  # Whether to generate libdarknet.so dynamic link library
 ZED_CAMERA=0
 ZED_CAMERA_v2_8=0
 
 # set GPU=1 and CUDNN=1 to speedup on GPU
 # set CUDNN_HALF=1 to further speedup 3 x times (Mixed-precision on Tensor Cores) GPU: Volta, Xavier, Turing and higher
+# the sorting of GPU architecture
+	#Tesla ：disappeared in the market
+	#Fermi ： GeForce 400, 500, 600, GT-630
+	#Kepler ： Tesla K40/K80, GeForce 700, GT-730
+	#Maxwell ： Tesla/Quadro M series GeForce 900, GTX-970
+	#Pascal ： Tesla P40 Tesla p100,GTX 1080, GTX 1070, GTX 1060
+	#Votal ： Tesla V100, GTX 1180
+	#Turing ： T4,GTX 1660 Ti, RTX 2060
+	#Ampere ： A100
+
 # set AVX=1 and OPENMP=1 to speedup on CPU (if error occurs then set AVX=0)
 # set ZED_CAMERA=1 to enable ZED SDK 3.0 and above
 # set ZED_CAMERA_v2_8=1 to enable ZED SDK 2.X
@@ -20,7 +30,7 @@ DEBUG=0
 ARCH= -gencode arch=compute_35,code=sm_35 \
       -gencode arch=compute_50,code=[sm_50,compute_50] \
       -gencode arch=compute_52,code=[sm_52,compute_52] \
-	    -gencode arch=compute_61,code=[sm_61,compute_61]
+	  -gencode arch=compute_61,code=[sm_61,compute_61]
 
 OS := $(shell uname)
 

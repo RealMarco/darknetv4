@@ -10,6 +10,11 @@ just take yolov7x as an example.
 
 ## 2. Before Installing and Compiling darknet - Install your CUDA, OpenCV cuDNN at first
 Refer to https://github.com/AlexeyAB/darknet  
+         https://github.com/AlexeyAB/darknet/wiki   
+and Colab tutorials: 
+         https://colab.research.google.com/drive/1_GdoqCJWXsChrOiY8sZMr_zbr_fH-0Fg   
+         https://colab.research.google.com/drive/12QusaaRj_lUwCGDvQNfICpa7kA7_a2dE   
+         
 As for error and debugging, refer to https://github.com/RealMarco/InstallSoftwaresonUbuntu/blob/master/InstallGPUVersionDarknetv3
 
 ## 3. Before compiling darknet - Modify *GPU, CUDNN, OPENCV, ARCH* in your Makefile
@@ -57,6 +62,7 @@ eval = RP
 ## 7. Modify/Check 2022_train.txt and 2022_test.txt, and ensure the text comply with paths of images in RPdevkit/RP2022/JPEGImages and /JPEGImagesTest
 
 ## 8. Modify the cfg/yolov7x_CASGC.cfg file  
+### look through https://github.com/AlexeyAB/darknet/wiki#meaning-of-configuration-parameters-in-the-cfg-files   for more detials
 ### width and height should be multiples of 32  
 width = 960 # 1920  
 height = 512 # 1024  
@@ -130,9 +136,15 @@ $ ./darknet detector recall cfg/CASGC.data cfg/yolov7x_CASGC_test.cfg backup/yol
     ### Observing the IoU distribution on each category of validation set 
     ### -iou_thresh 0.75
 
-$ ./darknet detector test cfg/CASGC.data cfg/yolov7x_CASGC_test.cfg backup/yolov4-p5/yolov7x_CASGC_iou_14364.weights data/RP_test4.jpg 
-    ### test a batch of images and visualize/show the original images with bbxes
+$ ./darknet detector test cfg/CASGC.data cfg/yolov7x_CASGC_test.cfg backup/yolov7x_CASGC_best_11_7.weights RPdevkit/RP2022/test/0010r.jpg 
+    ### test a batch of images and visualize/show the original images with bbxes; The .txt file should be in a specific format, viz. one path to an image per line.
+    ./darknet detector test cfg/CASGC.data cfg/yolov7x_CASGC_test.cfg backup/yolov7x_CASGC_best_11_7.weights RPdevkit/RP2022/test/images.txt 
     ### set -thresh .75
+    ### save results to .json file
+    ./darknet detector test cfg/coco.data cfg/yolov4.cfg yolov4.weights -ext_output -dont_show -out result.json < /mydrive/images.txt
+    ### save results to .txt file
+    ./darknet detector test cfg/coco.data cfg/yolov4.cfg yolov4.weights -dont_show -ext_output < /mydrive/images.txt > result.txt
+    
 
 ### Visualize loss-batches and iou-batchs by .log in /visualization folder
 $ cd visualization
@@ -172,6 +184,15 @@ $ python draw_pr.py
 exposure = 1.5
 jitter=.1
 
+
+# If you are using YOLOv5 in PyTorch version,
+
+## 1. When training on multi-GPUs, set DP (DataParallel) mode for singe-machine multi-GPU training, or DDP (DistributeDataParallel) mode for multi-machine multi-GPU training. For instance  
+
+model = torch.nn.DataParallel(model)
+and handle on other parameters and errors.
+
+Besides, you can use Model Parallel method.
 
 
 

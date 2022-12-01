@@ -47,11 +47,11 @@ def convert(size, box):  # normalize and convert to YOLO inputting format
     return (x,y,w,h)
 
 def convert_annotation(image_id):   # convert .xml annotations to .txt ones
-    # in_file_path = os.path.join(work_sapce_dir, 'RPdevkit/RP2007/Annotations/%s.xml' %image_id)
-    in_file_path = 'RPdevkit/RP2007/Annotations/%s.xml' %image_id
-    out_file = open('RPdevkit/RP2007/labels/%s.txt' %image_id, 'w')  # create an empty file 
+    # in_file_path = os.path.join(work_sapce_dir, 'RPdevkit/RP2022/Annotations/%s.xml' %image_id)
+    in_file_path = 'RPdevkit/RP2022/Annotations/%s.xml' %image_id
+    out_file = open('RPdevkit/RP2022/labels/%s.txt' %image_id, 'w')  # create an empty file 
     if os.path.isfile(in_file_path):  # with .xml annotations, convert and write the content
-        in_file =  open('RPdevkit/RP2007/Annotations/%s.xml' %image_id) # use imagename as imageid
+        in_file =  open('RPdevkit/RP2022/Annotations/%s.xml' %image_id) # use imagename as imageid
         tree=ET.parse(in_file)
         root = tree.getroot()
         size = root.find('size')
@@ -77,7 +77,7 @@ wd = os.getcwd()
 work_sapce_dir = os.path.join(wd, "RPdevkit/")
 if not os.path.isdir(work_sapce_dir):
     os.mkdir(work_sapce_dir)
-work_sapce_dir = os.path.join(work_sapce_dir, "RP2007/")
+work_sapce_dir = os.path.join(work_sapce_dir, "RP2022/")
 if not os.path.isdir(work_sapce_dir):
     os.mkdir(work_sapce_dir)
 annotation_dir = os.path.join(work_sapce_dir, "Annotations/")
@@ -99,22 +99,22 @@ RP_file_dir = os.path.join(RP_file_dir, "Main/")
 if not os.path.isdir(RP_file_dir):
         os.mkdir(RP_file_dir)
 
-train_file = open(os.path.join(wd, "2007_train.txt"), 'w')
-test_file = open(os.path.join(wd, "2007_test.txt"), 'w')
+train_file = open(os.path.join(wd, "2022_train.txt"), 'w')
+test_file = open(os.path.join(wd, "2022_test.txt"), 'w')
 train_file.close()
 test_file.close()
 RP_train_file = open(os.path.join(work_sapce_dir, "ImageSets/Main/train.txt"), 'w')
 RP_test_file = open(os.path.join(work_sapce_dir, "ImageSets/Main/test.txt"), 'w')
 RP_train_file.close()
 RP_test_file.close()
-if not os.path.exists('RPdevkit/RP2007/labels'):
-    os.makedirs('RPdevkit/RP2007/labels')
+if not os.path.exists('RPdevkit/RP2022/labels'):
+    os.makedirs('RPdevkit/RP2022/labels')
 else:
-    shutil.rmtree('RPdevkit/RP2007/labels')
-    os.makedirs('RPdevkit/RP2007/labels')
+    shutil.rmtree('RPdevkit/RP2022/labels')
+    os.makedirs('RPdevkit/RP2022/labels')
     
-train_file = open(os.path.join(wd, "2007_train.txt"), 'a')  # record absolute paths of images with extension
-test_file = open(os.path.join(wd, "2007_test.txt"), 'a')
+train_file = open(os.path.join(wd, "2022_train.txt"), 'a')  # record absolute paths of images with extension
+test_file = open(os.path.join(wd, "2022_test.txt"), 'a')
 RP_train_file = open(os.path.join(work_sapce_dir, "ImageSets/Main/train.txt"), 'a') # record image names without extension
 RP_test_file = open(os.path.join(work_sapce_dir, "ImageSets/Main/test.txt"), 'a')
 list = os.listdir(image_dir) # list the names of images/training images

@@ -15,3 +15,4 @@
 P.S. 
 1. Always ensure your images and labels have the same names except suffixes.
 2. step 7 must down after step 6 
+3. Prepare background images without any objects for detecting for training, as well as its blank .txt labels
