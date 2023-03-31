@@ -18,7 +18,7 @@ ZED_CAMERA_v2_8=0
 	#Pascal ： Tesla P40 Tesla p100,GTX 1080, GTX 1070, GTX 1060
 	#Votal ： Tesla V100, GTX 1180
 	#Turing ： T4,GTX 1660 Ti, RTX 2060
-	#Ampere ： A100
+	#Ampere ： A100, RTX 3070, RTX 3070 Ti
 
 # set AVX=1 and OPENMP=1 to speedup on CPU (if error occurs then set AVX=0)
 # set ZED_CAMERA=1 to enable ZED SDK 3.0 and above
