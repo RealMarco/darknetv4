@@ -3,7 +3,8 @@
 #based on https://devtalk.nvidia.com/default/topic/1042035/installing-opencv4-on-xavier/ & https://github.com/markste-in/OpenCV4XAVIER/blob/master/buildOpenCV4.sh
 
 # Compute Capabilities can be found here https://developer.nvidia.com/cuda-gpus#compute
-ARCH_BIN=7.2 # AGX Xavier
+ARCH_BIN=8.6
+#ARCH_BIN=7.2 # AGX Xavier
 #ARCH_BIN=6.2 # Tx2
 
 cd ~/Downloads
@@ -62,5 +63,5 @@ make -j4
 sudo make install
 sudo ldconfig
 
-cd ~/Downloads/opencv4/lib/python3.6/site-packages
-ln -s /usr/local/lib/python3.6/site-packages/cv2.cpython-36m-aarch64-linux-gnu.so cv2.so
+cd ~/Downloads/opencv4/lib/python3.*/site-packages
+ln -s /usr/local/lib/python3.8/site-packages/cv2/python-3.8/cv2.cpython-38-x86_64-linux-gnu.so cv2.so
