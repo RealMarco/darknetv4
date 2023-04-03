@@ -3,7 +3,7 @@
 #based on https://devtalk.nvidia.com/default/topic/1042035/installing-opencv4-on-xavier/ & https://github.com/markste-in/OpenCV4XAVIER/blob/master/buildOpenCV4.sh
 
 # Compute Capabilities can be found here https://developer.nvidia.com/cuda-gpus#compute
-ARCH_BIN=8.6
+ARCH_BIN=8.6 # RTX 3070 - 3080Ti
 #ARCH_BIN=7.2 # AGX Xavier
 #ARCH_BIN=6.2 # Tx2
 
