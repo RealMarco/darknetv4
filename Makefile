@@ -53,7 +53,7 @@ OS := $(shell uname)
 # ARCH= -gencode arch=compute_72,code=[sm_72,compute_72]
 
 # GTX 1080, GTX 1070, GTX 1060, GTX 1050, GTX 1030, Titan Xp, Tesla P40, Tesla P4
-ARCH= -gencode arch=compute_61,code=sm_61 -gencode arch=compute_61,code=compute_61
+# ARCH= -gencode arch=compute_61,code=sm_61 -gencode arch=compute_61,code=compute_61
 
 # GP100/Tesla P100 - DGX-1
 # ARCH= -gencode arch=compute_60,code=sm_60
@@ -66,6 +66,9 @@ ARCH= -gencode arch=compute_61,code=sm_61 -gencode arch=compute_61,code=compute_
 
 # For Tesla GA10x cards, RTX 3090, RTX 3080, RTX 3070, RTX A6000, RTX A40 uncomment:
 # ARCH= -gencode arch=compute_86,code=[sm_86,compute_86]
+
+# For Tesla/Quadro M series.
+ARCH= -gencode arch=compute_50,code=[sm_50,compute_50]
 
 
 VPATH=./src/
