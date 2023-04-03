@@ -8,14 +8,17 @@ just take yolov7x as an example.
 ## 1. Prepare your dataset refer to darknetv4/gen_multiobj_dataset_doc.txt
 ### In AlexeyAB's framework, .txt label files are stored in the same folders (RPdevkit/RP2022/JPEGImages and /JPEGImagesTest) with their corresponding images.
 
-## 2. Before Installing and Compiling darknet - Install your CUDA, OpenCV cuDNN at first
-Refer to https://github.com/AlexeyAB/darknet  
+## 2. Before Installing and Compiling darknet - Install your Nvida Driver, CUDA, cuDNN at first
+Refer to https://github.com/RealMarco/InstallSoftwaresonUbuntu/blob/master/Install%26CheckDriverCUDAcuDNN
+         https://github.com/AlexeyAB/darknet  
          https://github.com/AlexeyAB/darknet/wiki   
 and Colab tutorials: 
          https://colab.research.google.com/drive/1_GdoqCJWXsChrOiY8sZMr_zbr_fH-0Fg   
          https://colab.research.google.com/drive/12QusaaRj_lUwCGDvQNfICpa7kA7_a2dE   
          
 As for error and debugging, refer to https://github.com/RealMarco/InstallSoftwaresonUbuntu/blob/master/InstallGPUVersionDarknetv3
+
+### 2.5 install opencv by simply run $ darknetv4/scripts/install_OpenCV4.sh
 
 ## 3. Before compiling darknet - Modify *GPU, CUDNN, OPENCV, ARCH* in your Makefile
 	GPU=1
