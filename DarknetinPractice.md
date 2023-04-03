@@ -50,15 +50,15 @@ As for error and debugging, refer to https://github.com/RealMarco/InstallSoftwar
 	ARCH= -gencode arch=compute_86,code=[sm_86,compute_86]
 
 ## 4. Compiling darknet 
-$ cd darknet
-$ make clean  # if you have make a CPU version darknet before 
-$ make
+$ cd darknet  
+$ make clean  # if you have make a CPU version darknet before    
+$ make  
 ### As for error and debugging, refer to https://github.com/RealMarco/InstallSoftwaresonUbuntu/blob/master/InstallGPUVersionDarknetv3
 
 ### compiling on windows is quite different from linux, plz refer to AlexeyAB for more details 
 
 ## 5. Modify cfg/CASGC.data  
-eval = RP  
+eval = CASGC  
  
 ## 6. Modify data/CASGC.names in accordance with your classes
 
